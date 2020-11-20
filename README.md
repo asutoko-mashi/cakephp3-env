@@ -9,12 +9,14 @@ Dockerとcomposerを使ってCakePHP3.xの環境を構築します。
 公式サイトからDockerのアカウントを作ってログインし、DockerHubからダウンロードしてインストール  
 https://hub.docker.com/editions/community/docker-ce-desktop-mac
 
-### 2. このリポジトリのクローン
+### 2. リポジトリのクローン
 
 ファイルを展開したいディレクトリで  
 `$ git clone https://github.com/asutoko-mashi/cakephp3-env.git`
 
-### 3. イメージ作成、コンテナ立ち上げ
+## 早速動かしてみよう
+
+### 1. イメージ作成、コンテナ立ち上げ
 
 `cakephp3-env`ディレクトリ（任意の名前にも変更可能）へ移動し
 1. `$ docker-compose build`　でイメージを作成し
@@ -23,7 +25,7 @@ https://hub.docker.com/editions/community/docker-ce-desktop-mac
 
 3. `$ docker ps`　で起動したコンテナを確認します（phpfpmのコンテナIDまたはコンテナ名を確認）
 
-### 4. プロジェクトの作成
+### 2. CakePHPのインストール、プロジェクトの作成
 1. `$ docker exec -it コンテナID(またはコンテナ名) /bin/sh`　でphpfpmコンテナに入り、ターミナルを立ち上げる
 
 2. `# curl -s https://getcomposer.org/installer | php` でcomposerのinstallerを取得
@@ -38,7 +40,9 @@ https://hub.docker.com/editions/community/docker-ce-desktop-mac
 
 ## ファイルの書き換え
 
-1. `data/htdocs/プロジェクト名/config/app_local.php`　の40行目あたりの `host` を `mysql` に変更
+### 1. 接続先データソース
+
+`data/htdocs/プロジェクト名/config/app_local.php`　の40行目あたりの `host` を `mysql` に変更
     ```php
     'Datasources' => [
         'default' => [
@@ -48,7 +52,10 @@ https://hub.docker.com/editions/community/docker-ce-desktop-mac
     ※あくまでもローカル環境の設定です。
     本番の設定は`data/htdocs/プロジェクト名/config/app.php`の265行目あたりで行います。
 
-2. `docker-compose.yml` の下部にある`PRJ`を上で作成したプロジェクト名に変更
+
+### 2. プロジェクト名
+
+`docker-compose.yml` の下部にある`PRJ`を上で作成したプロジェクト名に変更
     ```text
     host:
       build: ./data/htdocs
@@ -68,7 +75,7 @@ https://hub.docker.com/editions/community/docker-ce-desktop-mac
       ```
 
 
-## 動かしてみる
+## 起動
 
 1. `$ docker-compose up -d`
 
