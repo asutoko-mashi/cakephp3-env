@@ -12,7 +12,7 @@ https://hub.docker.com/editions/community/docker-ce-desktop-mac
 ### 2. このリポジトリのクローン
 
 ファイルを展開したいディレクトリで  
-`$ git clone https://github.com/mashi-asutoko/cakephp3-env.git`
+`$ git clone https://github.com/asutoko-mashi/cakephp3-env.git`
 
 ### 3. イメージ作成、コンテナ立ち上げ
 
