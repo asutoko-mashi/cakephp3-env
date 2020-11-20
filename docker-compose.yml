@@ -1,0 +1,68 @@
+version: '2'
+services:
+  mysql:
+    restart: always
+    build: ./data/mysql/
+    volumes:
+      - "./data/mysql/db:/var/lib/mysql"
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_USER: my_app
+      MYSQL_PASSWORD: secret
+      MYSQL_DATABASE: my_app
+      TZ: "Asia/Tokyo"
+    ports:
+      - "3307:3306"
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    environment:
+      - PMA_ARBITRARY=1
+      - PMA_HOST=mysql
+      - PMA_USER=root
+      - PMA_PASSWORD=password
+    links:
+      - mysql
+    ports:
+      - 8080:80
+    volumes:
+      - "./data/phpmyadmin/sessions:/sessions"
+  nginx:
+    restart: always
+    image: "nginx:mainline-alpine"
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - "./data/nginx/conf:/etc/nginx/"
+      - "./data/htdocs:/var/www/html"
+    environment:
+      TZ: "Asia/Tokyo"
+    depends_on:
+      - phpfpm
+    links:
+      - phpfpm
+  phpfpm:
+    build: ./data/phpfpm/
+    environment:
+      TZ: "Asia/Tokyo"
+    volumes:
+      - "./data/htdocs:/var/www/html"
+    depends_on:
+      - mysql
+    links:
+      - mysql
+  host:
+    build: ./data/htdocs
+    environment:
+      TZ: "Asia/Tokyo"
+      PRJ: "project_name"
+    volumes:
+      - "./data/htdocs:/root"
+    ports:
+      - "8765:80"
+    depends_on:
+      - mysql
+      - phpfpm
+    links:
+      - mysql
+      - phpfpm
