@@ -43,36 +43,27 @@ https://hub.docker.com/editions/community/docker-ce-desktop-mac
 ### 1. 接続先データソース
 
 `data/htdocs/プロジェクト名/config/app_local.php`　の40行目あたりの `host` を `mysql` に変更
-    ```php
-    'Datasources' => [
-        'default' => [
-            'host' => 'mysql',
-      …以下略
-    ```
-    ※あくまでもローカル環境の設定です。
-    本番の設定は`data/htdocs/プロジェクト名/config/app.php`の265行目あたりで行います。
+  ```php
+  'Datasources' => [
+      'default' => [
+          'host' => 'mysql',
+  …以下略
+  ```
+  ※あくまでもローカル環境の設定です。
+  本番の設定は`data/htdocs/プロジェクト名/config/app.php`の265行目あたりで行います。
 
 
 ### 2. プロジェクト名
 
 `docker-compose.yml` の下部にある`PRJ`を上で作成したプロジェクト名に変更
-    ```text
+  ```text
     host:
       build: ./data/htdocs
       environment:
         TZ: "Asia/Tokyo"
         PRJ: "プロジェクト名"
       volumes:
-        - "./data/htdocs:/root"
-      ports:
-        - "8765:80"
-      depends_on:
-        - mysql
-        - phpfpm
-      links:
-        - mysql
-        - phpfpm
-      ```
+  ```
 
 
 ## 起動
