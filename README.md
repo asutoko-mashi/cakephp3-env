@@ -38,6 +38,21 @@ https://hub.docker.com/editions/community/docker-ce-desktop-mac
 
     （3.でバージョンを指定しない場合、最新の4.xがインストールされます）
 
+#### "Action required!"と言われたら
+
+cakephp/plugin-installerのバージョンアップによりpostAutoloadDump()の実行が必要なくなったそうです。
+
+作成したプロジェクトフォルダの中にある`composer.json`の該当行の削除が求められています。
+
+```text
+    "scripts": {
+        "post-install-cmd": "App\\Console\\Installer::postInstall",
+        "post-create-project-cmd": "App\\Console\\Installer::postInstall",
+        "post-autoload-dump": "Cake\\Composer\\Installer\\PluginInstaller::postAutoloadDump",
+         ↑この行を削除します
+```
+
+
 ## ファイルの書き換え
 
 ### 1. 接続先データソース
