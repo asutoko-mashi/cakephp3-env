@@ -38,11 +38,20 @@ https://hub.docker.com/editions/community/docker-ce-desktop-mac
 
     （3.でバージョンを指定しない場合、最新の4.xがインストールされます）
 
+##### 細かくバージョンを指定したい場合
+
+例えば3.2をインストールしたい場合は以下を実行します。
+
+`# php composer.phar create-project --prefer-dist cakephp/app:3.2.* プロジェクト名`
+
+
 #### "Action required!"と言われたら
 
 cakephp/plugin-installerのバージョンアップによりpostAutoloadDump()の実行が必要なくなったそうです。
 
 作成したプロジェクトフォルダの中にある`composer.json`の該当行の削除が求められています。
+
+気にならないのであれば、対処不要です・・・
 
 ```text
     "scripts": {
@@ -66,6 +75,9 @@ cakephp/plugin-installerのバージョンアップによりpostAutoloadDump()�
   ```
   ※あくまでもローカル環境の設定です。
   本番の設定は`data/htdocs/プロジェクト名/config/app.php`の265行目あたりで行います。
+
+  古いバージョンを指定しインストールすると、app_local.phpがない場合があります。
+  その場合は、app.phpの該当箇所を編集してください。
 
 
 ### 2. プロジェクト名
